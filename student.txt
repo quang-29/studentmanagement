@@ -1,0 +1,31 @@
+Student{studentNumber = AT170302, name = Tuan Minh, dob=Jul 16, 2002, address = Nam Dinh, phoneNumber = 0965432665, email = tuanminh162002@gmail.com, className = AT17E, major = Information Security}
+Student{studentNumber = AT170102, name = Tran Thi B, dob=2000-02-20, address = Ha Noi, phoneNumber = 0912345678, email = thitran@gmail.com, className = AT17A, major = Information Security}
+Student{studentNumber = AT170103, name = Le Van Cuong, dob=2002-03-25, address = Hai Phong, phoneNumber = 09345632423, email = vanle@gmail.com, className = AT17A, major = Information Security}
+Student{studentNumber = CT050104, name = Pham Thi Duyen, dob=1999-04-17, address = Hoi An, phoneNumber = 0987654321, email = duyenthipham@gmail.com, className = CT5C, major = Information Technology}
+Student{studentNumber = CT050105, name = Hoang Van E, dob=1996-05-15, address = Hue, phoneNumber = 0901234567, email = vanhoang@gmail.com, className = CT5E, major = Information Technology}
+Student{studentNumber = CT050106, name = Nguyen Thi F, dob=1995-06-20, address = Nha Trang, phoneNumber = 0923456789, email = thinguyen@gmail.com, className = CT5F, major = Information Technology}
+Student{studentNumber = CT050107, name = Bui Van G, dob=2001-07-30, address = Can Tho, phoneNumber = 0918765432, email = vanbui@gmail.com, className = CT5G, major = Information Technology}
+Student{studentNumber = CT050108, name = Do Thi Hai, dob=2002-08-25, address = Da Nag, phoneNumber = 0976543210, email = thido@gmail.com, className = CT5H, major = Information Technology}
+Student{studentNumber = DT050109, name = Vu Van I, dob=2003-09-10, address = Quang Ninh, phoneNumber = 0965432109, email = vanvu@gmail.com, className = DT4A, major = Electronics and Telecommunication}
+Student{studentNumber = AT170402, name = Nguyen Van Khang, dob=Aug 14, 2001, address = Vinh Phuc, phoneNumber = 0981650170, email = vankhang@gmail.com, className = AT17, major = Information Security}
+Student{studentNumber = AT170302, name = Tuan Minh, dob=Jul 16, 2002, address = Nam Dinh, phoneNumber = 0965432665, email = tuanminh162002@gmail.com, className = AT17E, major = Information Security}
+Student{studentNumber = AT170102, name = Tran Thi B, dob=2000-02-20, address = Ha Noi, phoneNumber = 0912345678, email = thitran@gmail.com, className = AT17A, major = Information Security}
+Student{studentNumber = AT170103, name = Le Van Cuong, dob=2002-03-25, address = Hai Phong, phoneNumber = 09345632423, email = vanle@gmail.com, className = AT17A, major = Information Security}
+Student{studentNumber = CT050104, name = Pham Thi Duyen, dob=1999-04-17, address = Hoi An, phoneNumber = 0987654321, email = duyenthipham@gmail.com, className = CT5C, major = Information Technology}
+Student{studentNumber = CT050105, name = Hoang Van E, dob=1996-05-15, address = Hue, phoneNumber = 0901234567, email = vanhoang@gmail.com, className = CT5E, major = Information Technology}
+Student{studentNumber = CT050106, name = Nguyen Thi F, dob=1995-06-20, address = Nha Trang, phoneNumber = 0923456789, email = thinguyen@gmail.com, className = CT5F, major = Information Technology}
+Student{studentNumber = CT050107, name = Bui Van G, dob=2001-07-30, address = Can Tho, phoneNumber = 0918765432, email = vanbui@gmail.com, className = CT5G, major = Information Technology}
+Student{studentNumber = CT050108, name = Do Thi Hai, dob=2002-08-25, address = Da Nag, phoneNumber = 0976543210, email = thido@gmail.com, className = CT5H, major = Information Technology}
+Student{studentNumber = DT050109, name = Vu Van I, dob=2003-09-10, address = Quang Ninh, phoneNumber = 0965432109, email = vanvu@gmail.com, className = DT4A, major = Electronics and Telecommunication}
+Student{studentNumber = AT170402, name = Nguyen Van Khang, dob=Aug 14, 2001, address = Vinh Phuc, phoneNumber = 0981650170, email = vankhang@gmail.com, className = AT17, major = Information Security}
+Student{studentNumber = AT170302, name = Tuan Minh, dob=Jul 16, 2002, address = Nam Dinh, phoneNumber = 0965432665, email = tuanminh162002@gmail.com, className = AT17E, major = Information Security}
+Student{studentNumber = AT170102, name = Tran Thi B, dob=2000-02-20, address = Ha Noi, phoneNumber = 0912345678, email = thitran@gmail.com, className = AT17A, major = Information Security}
+Student{studentNumber = AT170103, name = Le Van Cuong, dob=2002-03-25, address = Hai Phong, phoneNumber = 09345632423, email = vanle@gmail.com, className = AT17A, major = Information Security}
+Student{studentNumber = CT050104, name = Pham Thi Duyen, dob=1999-04-17, address = Hoi An, phoneNumber = 0987654321, email = duyenthipham@gmail.com, className = CT5C, major = Information Technology}
+Student{studentNumber = CT050105, name = Hoang Van E, dob=1996-05-15, address = Hue, phoneNumber = 0901234567, email = vanhoang@gmail.com, className = CT5E, major = Information Technology}
+Student{studentNumber = CT050106, name = Nguyen Thi F, dob=1995-06-20, address = Nha Trang, phoneNumber = 0923456789, email = thinguyen@gmail.com, className = CT5F, major = Information Technology}
+Student{studentNumber = CT050107, name = Bui Van G, dob=2001-07-30, address = Can Tho, phoneNumber = 0918765432, email = vanbui@gmail.com, className = CT5G, major = Information Technology}
+Student{studentNumber = CT050108, name = Do Thi Hai, dob=2002-08-25, address = Da Nag, phoneNumber = 0976543210, email = thido@gmail.com, className = CT5H, major = Information Technology}
+Student{studentNumber = DT050109, name = Vu Van I, dob=2003-09-10, address = Quang Ninh, phoneNumber = 0965432109, email = vanvu@gmail.com, className = DT4A, major = Electronics and Telecommunication}
+Student{studentNumber = AT170402, name = Nguyen Van Khang, dob=Aug 14, 2001, address = Vinh Phuc, phoneNumber = 0981650170, email = vankhang@gmail.com, className = AT17, major = Information Security}
+Student{studentNumber = AT170302, name = Tuan Minh, dob=Jul 16, 2002, address = Nam Dinh, phoneNumber = 0965432665, email = tuanminh162002@gmail.com, className = AT17E, major = Information Security}
