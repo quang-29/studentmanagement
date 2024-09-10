@@ -27,7 +27,7 @@ import StudentManagement.model.Subject;
 public class AddSubject extends JFrame implements ActionListener{
 
     
-    JTextField tfid, tfscore, tfsubject, tfsubject_id;
+    JTextField tfsubject_name, tfsubject_id,tfteacher_id;
     JTextField tfacademicyear,tfcredits;
     JComboBox cbbsemester;
     JButton btnsubmit, btncancel;
@@ -75,17 +75,17 @@ public class AddSubject extends JFrame implements ActionListener{
         lblsubject.setBounds(50, 100, 200, 30);
         add(lblsubject);
 
-        tfsubject = new JTextField();
-        tfsubject.setBounds(50, 150, 300, 30);
-        add(tfsubject);
+        tfsubject_id = new JTextField();
+        tfsubject_id.setBounds(50, 150, 300, 30);
+        add(tfsubject_id);
 
         JLabel lblsubject_id = new JLabel("Subject Name");
         lblsubject_id.setBounds(50, 200, 200, 30);
         add(lblsubject_id);
 
-        tfsubject_id = new JTextField();
-        tfsubject_id.setBounds(50, 250, 300, 30);
-        add(tfsubject_id);
+        tfsubject_name = new JTextField();
+        tfsubject_name.setBounds(50, 250, 300, 30);
+        add(tfsubject_name);
         
         
          JLabel lblcredits = new JLabel("Credits");
@@ -96,16 +96,22 @@ public class AddSubject extends JFrame implements ActionListener{
         tfcredits.setBounds(50, 350, 300, 30);
         add(tfcredits);
 
-       
+       JLabel lblteacher_id = new JLabel("Teacher Id");
+        lblteacher_id.setBounds(50, 550, 100, 30);
+        add(lblteacher_id);
+
+        tfteacher_id = new JTextField();
+        tfteacher_id.setBounds(200, 550, 150, 30);
+        add(tfteacher_id);
         
 
         btnsubmit = new JButton("Submit");
-        btnsubmit.setBounds(50, 580, 100, 30);
+        btnsubmit.setBounds(50, 600, 100, 30);
         btnsubmit.addActionListener(this);
         add(btnsubmit);
 
         btncancel = new JButton("Cancel");
-        btncancel.setBounds(200, 580, 100, 30);
+        btncancel.setBounds(200, 600, 100, 30);
         btncancel.addActionListener(this);
         add(btncancel);
 
@@ -119,10 +125,11 @@ public class AddSubject extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
        if(e.getSource() == btnsubmit){
            String subjectid = tfsubject_id.getText();
-           String subjectname = tfsubject.getText();
+           String subjectname = tfsubject_name.getText();
            String credits = tfcredits.getText();
            String semester = (String) cbbsemester.getSelectedItem();
            String academicyear = tfacademicyear.getText();
+           String teacherid = tfteacher_id.getText();
            
            if (subjectid.equals("") || subjectname.equals("") || credits.equals("") ||
                    academicyear.equals("")){
@@ -130,12 +137,13 @@ public class AddSubject extends JFrame implements ActionListener{
            } else {
                Subject sub = new Subject();
                sub.setSubject_name(subjectname);
-               sub.setSubject_id(Integer.parseInt(credits));
+               sub.setSubject_id(subjectid);
                sub.setSemester(semester);
+               sub.setCredits(Integer.parseInt(credits));
                sub.setAcademic_year(academicyear);
-               
+               sub.setTeacher_id(teacherid);
                subjectDaoImpl = SubjectDaoImpl.getInstance();
-               subjectDaoImpl.insertSubjectById(sub);
+               subjectDaoImpl.insertSubject(sub);
                JOptionPane.showMessageDialog(this, "Add subject successfully");
            }
        } else if (e.getSource() == btncancel){

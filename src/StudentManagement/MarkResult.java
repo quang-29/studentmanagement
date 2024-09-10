@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package StudentManagement;
 
+package StudentManagement;
 import java.awt.*;
+
 import javax.swing.*;
 import java.sql.*;
 import java.awt.event.*;
@@ -14,6 +11,8 @@ public class MarkResult extends JFrame implements ActionListener {
 
     String studentnum;
     JButton cancel;
+    JPanel subjectPanel;
+    JScrollPane scrollPane;
 
     MarkResult(String studentnum) {
         this.studentnum = studentnum;
@@ -21,10 +20,9 @@ public class MarkResult extends JFrame implements ActionListener {
         setSize(500, 600);
         setLocationRelativeTo(null);
         setLayout(null);
-
         getContentPane().setBackground(Color.WHITE);
 
-        JLabel heading = new JLabel("Technical Univeristy");
+        JLabel heading = new JLabel("Technical University");
         heading.setBounds(100, 10, 500, 25);
         heading.setFont(new Font("Tahoma", Font.BOLD, 20));
         add(heading);
@@ -39,62 +37,16 @@ public class MarkResult extends JFrame implements ActionListener {
         studentnumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
         add(studentnumber);
 
-        JLabel lblsemester = new JLabel();
-        lblsemester.setBounds(60, 130, 500, 20);
-        lblsemester.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        add(lblsemester);
+        // Tạo JPanel chứa các subject labels
+        subjectPanel = new JPanel();
+        subjectPanel.setLayout(new BoxLayout(subjectPanel, BoxLayout.Y_AXIS));
 
-        JLabel sub1 = new JLabel();
-        sub1.setBounds(100, 200, 500, 20);
-        sub1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        add(sub1);
+        // Thêm JScrollPane để cuộn nếu có nhiều môn học
+        scrollPane = new JScrollPane(subjectPanel);
+        scrollPane.setBounds(60, 150, 360, 300);
+        add(scrollPane);
 
-        JLabel sub2 = new JLabel();
-        sub2.setBounds(100, 230, 500, 20);
-        sub2.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        add(sub2);
-
-        JLabel sub3 = new JLabel();
-        sub3.setBounds(100, 260, 500, 20);
-        sub3.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        add(sub3);
-
-        JLabel sub4 = new JLabel();
-        sub4.setBounds(100, 290, 500, 20);
-        sub4.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        add(sub4);
-
-        try {
-            
-            Connection c = DBHelper.getConnection();
-            String query1 = "SELECT * FROM subject WHERE studentnumber = ?";
-            PreparedStatement ps1 = c.prepareStatement(query1);
-            ps1.setString(1, studentnum);
-            String query2 = "SELECT * FROM grade WHERE studentnumber = ?";
-            PreparedStatement ps2 = c.prepareStatement(query2);
-            ps2.setString(1, studentnum);
-            ResultSet rs1 = ps1.executeQuery();
-            ResultSet rs2 = ps2.executeQuery();
-
-            while (rs1.next()) {
-                sub1.setText(rs1.getString("subject1"));
-                sub2.setText(rs1.getString("subject2"));
-                sub3.setText(rs1.getString("subject3"));
-                sub4.setText(rs1.getString("subject4"));
-                
-            }
-
-            while (rs2.next()) {
-                sub1.setText(sub1.getText() + "------------" + rs2.getString("mark1"));
-                sub2.setText(sub2.getText() + "------------" + rs2.getString("mark2"));
-                sub3.setText(sub3.getText() + "------------" + rs2.getString("mark3"));
-                sub4.setText(sub4.getText() + "------------" + rs2.getString("mark4"));
-                
-                lblsemester.setText("Semester " + rs2.getString("semester"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        loadSubjects();
 
         cancel = new JButton("Back");
         cancel.setBounds(250, 500, 120, 25);
@@ -107,11 +59,42 @@ public class MarkResult extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    private void loadSubjects() {
+        try {
+            Connection c = DBHelper.getConnection();
+            String query = "SELECT s.student_id, s.first_name, s.last_name, s.class_id, sub.subject_name, sc.score "
+                            + "FROM score sc "
+                            + "INNER JOIN student s ON sc.student_id = s.student_id "
+                            + "INNER JOIN subject sub ON sc.subject_id = sub.subject_id "
+                            + "WHERE s.student_id = ?";
+            PreparedStatement ps1 = c.prepareStatement(query);
+            ps1.setString(1, studentnum);
+            ResultSet rs1 = ps1.executeQuery();
+
+            while (rs1.next()) {
+                // Tạo JLabel mới cho mỗi môn học
+                String subjectInfo = rs1.getString("subject_name") + " - Score: " + rs1.getString("score");
+                JLabel subjectLabel = new JLabel(subjectInfo);
+                subjectLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+                
+                // Thêm JLabel vào JPanel
+                subjectPanel.add(subjectLabel);
+            }
+
+            // Cập nhật giao diện để hiển thị các labels mới
+            subjectPanel.revalidate();
+            subjectPanel.repaint();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void actionPerformed(ActionEvent ae) {
         setVisible(false);
     }
 
     public static void main(String[] args) {
-        new MarkResult("");
+        new MarkResult("CT050001");
     }
 }

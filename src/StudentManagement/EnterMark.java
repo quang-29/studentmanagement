@@ -27,9 +27,7 @@ import StudentManagement.config.DBHelper;
  */
 public class EnterMark extends JFrame implements ActionListener {
 
-    JTextField tfid, tfscore, tfsubject, tfsubject_id;
-    JTextField tfacademicyear;
-    JComboBox cbbsemester;
+    JTextField tfscore, tfstudent_id, tfsubject_id;
     JButton btnsubmit, btncancel;
 
     public EnterMark() {
@@ -55,9 +53,9 @@ public class EnterMark extends JFrame implements ActionListener {
         studentnumber.setBounds(50, 100, 200, 30);
         add(studentnumber);
 
-        tfid = new JTextField();
-        tfid.setBounds(50, 150, 300, 30);
-        add(tfid);
+        tfstudent_id = new JTextField();
+        tfstudent_id.setBounds(50, 150, 300, 30);
+        add(tfstudent_id);
 
         JLabel lblsubject_id = new JLabel("Enter Subject Id");
         lblsubject_id.setBounds(50, 200, 200, 30);
@@ -95,27 +93,22 @@ public class EnterMark extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnsubmit) {
-            String id = tfid.getText();
-            String semester = (String) cbbsemester.getSelectedItem();
-            String academicyear = tfacademicyear.getText();
+            
+            String studentid = tfstudent_id.getText();
             String subjectid = tfsubject_id.getText();
-            String subject = tfsubject.getText();
             String score = tfscore.getText();
 
-            if (id.equals("") || academicyear.equals("")
-                    || subject.equals("")) {
+            if (studentid.equals("") || subjectid.equals("")
+                    || score.equals("")) {
                 JOptionPane.showMessageDialog(this, "Please fill in all information!");
             } else {
 
                 Connection c = DBHelper.getConnection();
                 try {
 
-                    String query2 = "INSERT INTO scores (student_id,subject_id,score) VALUES (?,?,?)";
-
+                    String query2 = "INSERT INTO score (student_id,subject_id,score) VALUES (?,?,?)";
                     PreparedStatement ps2 = c.prepareStatement(query2);
-
-
-                    ps2.setString(1, id);
+                    ps2.setString(1, studentid);
                     ps2.setString(2, subjectid);
                     ps2.setDouble(3, Double.parseDouble(score));
                     ps2.executeUpdate();
@@ -135,12 +128,10 @@ public class EnterMark extends JFrame implements ActionListener {
     }
 
     public void setNull() {
-        tfid.setText("");
-        cbbsemester.setSelectedIndex(0);
-        tfacademicyear.setText("");
+        tfstudent_id.setText("");
         tfscore.setText("");
-        tfsubject.setText("");
         tfsubject_id.setText("");
+        
 
     }
 

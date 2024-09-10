@@ -26,6 +26,7 @@ import javax.swing.JTextField;
 import net.proteanit.sql.DbUtils;
 import java.awt.event.*;
 import StudentManagement.config.DBHelper;
+import StudentManagement.MarkResult;
 
 /**
  *
@@ -34,7 +35,7 @@ import StudentManagement.config.DBHelper;
 public class ExaminationDetails extends JFrame implements ActionListener {
 
     JTable table;
-    JButton btnresult, btnback, btnsearch,btnshowall;
+    JButton btnresult, btnback, btnsearch, btnshowall;
     JTextField id;
 
     public ExaminationDetails() {
@@ -51,7 +52,6 @@ public class ExaminationDetails extends JFrame implements ActionListener {
         id = new JTextField();
         id.setBounds(50, 100, 200, 30);
         add(id);
-        
 
         btnresult = new JButton("Result");
         btnresult.setBounds(600, 100, 100, 30);
@@ -62,7 +62,7 @@ public class ExaminationDetails extends JFrame implements ActionListener {
         btnsearch.setBounds(300, 100, 100, 30);
         btnsearch.addActionListener(this);
         add(btnsearch);
-        
+
         btnshowall = new JButton("Show all");
         btnshowall.setBounds(450, 100, 100, 30);
         btnshowall.addActionListener(this);
@@ -78,15 +78,15 @@ public class ExaminationDetails extends JFrame implements ActionListener {
         jsp.setBounds(0, 150, 1000, 700);
         add(jsp);
         loadData();
-        
+
         table.addMouseListener(new MouseAdapter() {
-            
+
             public void mouseClicked(MouseEvent me) {
                 int row = table.getSelectedRow();
                 id.setText(table.getModel().getValueAt(row, 0).toString());
-                
+
             }
-            
+
         });
 
         setVisible(true);
@@ -111,7 +111,13 @@ public class ExaminationDetails extends JFrame implements ActionListener {
             } else {
                 Connection c = DBHelper.getConnection();
                 try {
-                    String query = "SELECT * FROM students WHERE student_id = ?";
+
+                    String query = "SELECT s.student_id, CONCAT(s.first_name, ' ', s.last_name) AS name, s.class_id, sub.subject_id, sub.subject_name, sub.semester, sub.academic_year, sc.score "
+                            + "FROM score sc "
+                            + "INNER JOIN student s ON sc.student_id = s.student_id "
+                            + "INNER JOIN subject sub ON sc.subject_id = sub.subject_id "
+                            + "WHERE s.student_id = ?";
+
                     PreparedStatement ps = c.prepareStatement(query);
                     ps.setString(1, tfid);
                     ResultSet rs = ps.executeQuery();
@@ -122,7 +128,7 @@ public class ExaminationDetails extends JFrame implements ActionListener {
                 }
             }
 
-        } else if (e.getSource() == btnshowall){
+        } else if (e.getSource() == btnshowall) {
             loadData();
             id.setText("");
         }
@@ -130,14 +136,15 @@ public class ExaminationDetails extends JFrame implements ActionListener {
     }
 
     private void loadData() {
-       
-            Connection c = DBHelper.getConnection();
+
+        Connection c = DBHelper.getConnection();
         try {
-            
-            String query = "SELECT s.student_id,s.first_name, s.last_name,sub.subject_id, sub.subject_name, sc.score\n" +
-                                "FROM scores sc\n" +
-                                "INNER JOIN students s ON sc.student_id = s.student_id\n" +
-                                "INNER JOIN subjects sub ON sc.subject_id = sub.subject_id;";
+
+            String query = "SELECT s.student_id, CONCAT(s.first_name, ' ', s.last_name) AS name, s.class_id, sub.subject_id, sub.subject_name, sub.semester, sub.academic_year, sc.score "
+                            + "FROM score sc "
+                            + "INNER JOIN student s ON sc.student_id = s.student_id "
+                            + "INNER JOIN subject sub ON sc.subject_id = sub.subject_id ";
+                            
             PreparedStatement ps = c.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             table.setModel(DbUtils.resultSetToTableModel(rs));

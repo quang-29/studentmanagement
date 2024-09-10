@@ -22,16 +22,17 @@ public class SubjectDaoImpl {
     }
     
     
-    public void insertSubjectById(Subject sub){
+    public void insertSubject(Subject sub){
         Connection c = DBHelper.getConnection();
         try {
-            String query = "INSERT INTO subjects (subject_id, subject_name,credits, semester,academic_year) VALUES (?,?,?,?,?)";
+            String query = "INSERT INTO subject(subject_id, subject_name,credits, semester,academic_year, teacher_id) VALUES (?,?,?,?,?,?)";
             PreparedStatement ps = c.prepareStatement(query);
-            ps.setInt(1, sub.getSubject_id());
+            ps.setString(1, sub.getSubject_id());
             ps.setString(2, sub.getSubject_name());
             ps.setInt(3, sub.getCredits());
             ps.setString(4, sub.getSemester());
             ps.setString(5, sub.getAcademic_year());
+            ps.setString(6, sub.getTeacher_id());
             ps.executeUpdate();
             
         } catch (Exception e) {
@@ -41,14 +42,14 @@ public class SubjectDaoImpl {
     
     public ResultSet fillSubjectWithData() throws SQLException{
         Connection c = DBHelper.getConnection();
-        String query = "SELECT * FROM subjects";
+        String query = "SELECT * FROM subject";
         PreparedStatement ps = c.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
         return rs;
     }
     public void deleteSubjectById(String id){
         Connection c = DBHelper.getConnection();
-        String query = "DELETE FROM subjects WHERE subject_id = ?";
+        String query = "DELETE FROM subject WHERE subject_id = ?";
         try {
             PreparedStatement ps = c.prepareStatement(query);
             ps.setInt(1, Integer.parseInt(id));
@@ -62,17 +63,19 @@ public class SubjectDaoImpl {
     
     public void addSubject(Subject su){
         Connection c = DBHelper.getConnection();
-        String query = "INSERT INTO subjects (subject_id,subject_name, credits, semester, academic_year) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO subject (subject_id, subject_name, credits, semester, academic_year, teacher_id) VALUES (?,?,?,?,?,?)";
         try {
             PreparedStatement ps = c.prepareStatement(query);
-            ps.setInt(1, su.getSubject_id());
+            ps.setString(1, su.getSubject_id());
             ps.setString(2, su.getSubject_name());
             ps.setInt(3, su.getCredits());
             ps.setString(4, su.getSemester());
             ps.setString(5, su.getAcademic_year());
+            ps.setString(6, su.getTeacher_id());
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -27,7 +27,7 @@ public class StudentDaoImpl {
 
     public void insertStudent(Student st) throws SQLException {
         Connection c = DBHelper.getConnection();
-        String query = "INSERT INTO students (id, first_name, last_name, date_of_birth, gender, major, class_id, email, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO student (student_id, first_name, last_name, dob, gender, major, class_id, email, address, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = c.prepareStatement(query);
         ps.setString(1, st.getId());
         ps.setString(2, st.getFirst_name());
@@ -35,18 +35,18 @@ public class StudentDaoImpl {
         ps.setDate(4, st.getDob());
         ps.setString(5, st.getGender());
         ps.setString(6, st.getMajor());
-        ps.setString(7, st.getClass_id());
+        ps.setString(7, st.getClass_id());  // Corrected index
         ps.setString(8, st.getEmail());
         ps.setString(9, st.getAddress());
+        ps.setString(10, st.getPhone());
         ps.executeUpdate();
         ps.close();
-
     }
 
     public List<Student> getStudentById(String id) {
         List<Student> lists = null;
         Connection connection = DBHelper.getConnection();
-        String query = "SELECT * FROM student WHERE studentnumber = ?";
+        String query = "SELECT * FROM student WHERE student_id = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, id);
@@ -74,7 +74,7 @@ public class StudentDaoImpl {
     public ResultSet searchStudentById(String id) {
 
         Connection c = DBHelper.getConnection();
-        String query = "SELECT * FROM students WHERE id = ?";
+        String query = "SELECT * FROM student WHERE student_id = ?";
         try {
             PreparedStatement ps = c.prepareStatement(query);
             ps.setString(1, id);
@@ -90,7 +90,7 @@ public class StudentDaoImpl {
 
     public void deleteStudentById(String id) {
         Connection c = DBHelper.getConnection();
-        String query = "DELETE FROM students WHERE id = ?";
+        String query = "DELETE FROM student WHERE student_id = ?";
         PreparedStatement ps;
         try {
             ps = c.prepareStatement(query);

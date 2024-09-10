@@ -9,19 +9,30 @@ package StudentManagement.model;
  * @author My Laptop
  */
 public class Subject {
-    private int subject_id;
+    private String subject_id;
     private String subject_name;
     private int credits;
     private String semester;
     private String academic_year;
+    private String teacher_id;
 
-    public int getSubject_id() {
+    public String getTeacher_id() {
+        return teacher_id;
+    }
+
+    public void setTeacher_id(String teacher_id) {
+        this.teacher_id = teacher_id;
+    }
+
+    public String getSubject_id() {
         return subject_id;
     }
 
-    public void setSubject_id(int subject_id) {
+    public void setSubject_id(String subject_id) {
         this.subject_id = subject_id;
     }
+
+    
 
     
    
@@ -58,13 +69,16 @@ public class Subject {
         this.academic_year = academic_year;
     }
 
-    public Subject(int subject_id, String subject_name, int credits, String semester, String academic_year) {
+    public Subject(String subject_id, String subject_name, int credits, String semester, String academic_year, String teacher_id) {
         this.subject_id = subject_id;
         this.subject_name = subject_name;
         this.credits = credits;
         this.semester = semester;
         this.academic_year = academic_year;
+        this.teacher_id = teacher_id;
     }
+
+    
 
     
 
@@ -73,8 +87,10 @@ public class Subject {
 
     @Override
     public String toString() {
-        return "Subject{" + "subject_id=" + subject_id + ", subject_name=" + subject_name + ", credits=" + credits + ", semester=" + semester + ", academic_year=" + academic_year + '}';
+        return "Subject{" + "subject_id=" + subject_id + ", subject_name=" + subject_name + ", credits=" + credits + ", semester=" + semester + ", academic_year=" + academic_year + ", teacher_id=" + teacher_id + '}';
     }
+
+   
 
     
     

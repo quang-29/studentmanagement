@@ -14,7 +14,7 @@ import StudentManagement.dao.TeacherDaoImpl;
 
 public class UpdateTeacher extends JFrame implements ActionListener {
 
-    JTextField tfid, tffirstname, tflastname, tfemail, tfaddress, tfphonenumber, tfsubject, tfsearch;
+    JTextField tfid, tffirstname, tflastname, tfemail, tfaddress, tfphonenumber,tfsearch;
     JButton btnupdate, btncancel, btnsearch, btnreset;
     JDateChooser dcdob;
     JComboBox<String> cbbdepartment, cbbdegree;
@@ -127,12 +127,6 @@ public class UpdateTeacher extends JFrame implements ActionListener {
         tfemail.setBounds(500, 300, 180, 30);
         add(tfemail);
 
-        JLabel lblsubject = new JLabel("Subject");
-        lblsubject.setBounds(50, 350, 180, 30);
-        add(lblsubject);
-        tfsubject = new JTextField();
-        tfsubject.setBounds(150, 350, 180, 30);
-        add(tfsubject);
 
         btnupdate = new JButton("Update");
         btnupdate.setBackground(Color.WHITE);
@@ -178,23 +172,24 @@ public class UpdateTeacher extends JFrame implements ActionListener {
 
     public void fillFormWithTeacherData(String idTeacher) {
         try (Connection c = DBHelper.getConnection()) {
-            String query = "SELECT * FROM teachers WHERE id = ?";
+            String query = "SELECT * FROM teacher WHERE teacher_id = ?";
             PreparedStatement ps = c.prepareStatement(query);
             ps.setString(1, idTeacher);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                tfid.setText(rs.getString("id"));
+                tfid.setText(rs.getString("teacher_id"));
                 tffirstname.setText(rs.getString("first_name"));
                 tflastname.setText(rs.getString("last_name"));
+                dcdob.setDate(rs.getDate("dob"));
                 group.setSelected(rs.getString("gender").equalsIgnoreCase("male") ? male.getModel() : female.getModel(), true);
-                tfsubject.setText(rs.getString("subject"));
                 cbbdepartment.setSelectedItem(rs.getString("department"));
                 cbbdegree.setSelectedItem(rs.getString("degree"));
                 tfemail.setText(rs.getString("email"));
-                tfphonenumber.setText(rs.getString("phone_number"));
-                dcdob.setDate(rs.getDate("dob"));
                 tfaddress.setText(rs.getString("address"));
+                tfphonenumber.setText(rs.getString("phone"));
+                
+                
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -205,17 +200,17 @@ public class UpdateTeacher extends JFrame implements ActionListener {
         String id = tfid.getText();
         String firstname = tffirstname.getText();
         String lastname = tflastname.getText();
-        String gender = male.isSelected()? "male": "female";
+        String gender = male.isSelected()? "Male": "Female";
         Date dob = new Date(dcdob.getDate().getTime());
         String department = (String) cbbdepartment.getSelectedItem();
         String degree = (String) cbbdegree.getSelectedItem();
         String phone = tfphonenumber.getText();
         String email = tfemail.getText();
         String address = tfaddress.getText();
-        String subject = tfsubject.getText();
+        
 
         try (Connection c = DBHelper.getConnection()) {
-            String query = "UPDATE teachers SET first_name = ?, last_name = ?, gender = ?, dob = ?, department = ?, degree = ?, phone_number = ?, email = ?, address = ?, subject = ? WHERE id = ?";
+            String query = "UPDATE teacher SET first_name = ?, last_name = ?, gender = ?, dob = ?, department = ?, degree = ?, phone = ?, email = ?, address = ? WHERE teacher_id = ?";
             PreparedStatement ps = c.prepareStatement(query);
             ps.setString(1, firstname);
             ps.setString(2, lastname);
@@ -225,14 +220,13 @@ public class UpdateTeacher extends JFrame implements ActionListener {
             ps.setString(6, degree);
             ps.setString(7, phone);
             ps.setString(8, email);
-            ps.setString(9, address);
-            ps.setString(10, subject);
-            ps.setString(11, id);
+            ps.setString(9, address);   
+            ps.setString(10, id);
             ps.executeUpdate();
             JOptionPane.showMessageDialog(this, "Update successful!");
         } catch (SQLException ex) {
-            ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Update failed!");
+            ex.printStackTrace();
         }
     }
 
@@ -247,7 +241,6 @@ public class UpdateTeacher extends JFrame implements ActionListener {
         tfaddress.setText("");
         tfphonenumber.setText("");
         tfemail.setText("");
-        tfsubject.setText("");
         tfsearch.setText("");
     }
 

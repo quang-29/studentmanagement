@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class DBHelper {
     
     private static final String className= "com.mysql.cj.jdbc.Driver";
-    private static final String url = "jdbc:mysql://localhost:3306/qlsv";
+    private static final String url = "jdbc:mysql://localhost:3306/universitymanagement";
     private static final String user = "root";
     private static final String password = "";
     

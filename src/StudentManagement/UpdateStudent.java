@@ -32,158 +32,137 @@ import StudentManagement.dao.StudentDaoImpl;
 public class UpdateStudent extends JFrame implements ActionListener {
 
     JTextField tfaddress, tfphone, tfemail, tfsearch;
-    JButton btnupdate, btncancel, btnseacrch, btnreset;
+    JButton btnupdate, btncancel, btnsearch, btnreset;
     String idstudent;
     JTextField tfid, tffirstname, tflastname, tfclassid;
     JDateChooser dcdob;
     java.sql.Date dob;
-    JComboBox cbcourse;
+    JComboBox cbbmajor;
     ButtonGroup group;
     private StudentDaoImpl studentDaoImpl;
     JRadioButton male, female;
 
     public UpdateStudent(String idstudent) {
         this.idstudent = idstudent;
-        setSize(900, 800);
+
+        // Frame setup
+        setSize(800, 600);
         setLocationRelativeTo(null);
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
 
         JLabel heading = new JLabel("Update Student");
-        heading.setBounds(50, 20, 200, 30);
-        heading.setFont(new Font("serif", Font.ITALIC, 30));
-
+        heading.setBounds(50, 20, 180, 30);
+        heading.setFont(new Font("serif", Font.ITALIC, 20));
         add(heading);
 
         tfsearch = new JTextField();
-        tfsearch.setBounds(300, 40, 180, 30);
-        tfsearch.setFont(new Font("serif", Font.BOLD, 20));
+        tfsearch.setBounds(200, 50, 180, 30);
         add(tfsearch);
-
-        btnseacrch = new JButton("Search");
-        btnseacrch.setBounds(500, 40, 100, 30);
-        btnseacrch.addActionListener(this);
-        add(btnseacrch);
+        btnsearch = new JButton("Search");
+        btnsearch.setBounds(400, 50, 100, 30);
+        btnsearch.addActionListener(this);
+        add(btnsearch);
 
         btnreset = new JButton("Reset");
-        btnreset.setBounds(620, 40, 100, 30);
+        btnreset.setBounds(520, 50, 100, 30);
         btnreset.addActionListener(this);
         add(btnreset);
 
-        JLabel lblid = new JLabel("Id");
+        JLabel lblid = new JLabel("Teacher ID");
         lblid.setBounds(50, 100, 100, 30);
-        lblid.setFont(new Font("serif", Font.BOLD, 20));
         add(lblid);
         tfid = new JTextField();
-        tfid.setBounds(200, 100, 180, 30);
+        tfid.setBounds(150, 100, 180, 30);
         add(tfid);
 
-        JLabel lblfirstname = new JLabel("First Name");
-        lblfirstname.setBounds(400, 100, 200, 30);
-        lblfirstname.setFont(new Font("serif", Font.BOLD, 20));
-        add(lblfirstname);
-        tffirstname = new JTextField();
-        tffirstname.setBounds(600, 100, 180, 30);
-        add(tffirstname);
-
-        JLabel lbllastname = new JLabel("Last Name");
-        lbllastname.setBounds(50, 200, 200, 30);
-        lbllastname.setFont(new Font("serif", Font.BOLD, 20));
-        add(lbllastname);
-        tflastname = new JTextField();
-        tflastname.setBounds(200, 200, 180, 30);
-        add(tflastname);
-
-        JLabel lbldob = new JLabel("Date of Birth");
-        lbldob.setBounds(400, 200, 250, 30);
-        lbldob.setFont(new Font("serif", Font.BOLD, 20));
-        add(lbldob);
+        JLabel dob = new JLabel("Date of Birth");
+        dob.setBounds(400, 100, 180, 30);
+        add(dob);
         dcdob = new JDateChooser();
-        dcdob.setBounds(600, 200, 180, 30);
+        dcdob.setBounds(500, 100, 180, 30);
         add(dcdob);
 
-        JLabel lblgender = new JLabel("Gender");
-        lblgender.setBounds(50, 300, 200, 30);
-        lblgender.setFont(new Font("serif", Font.BOLD, 20));
-        add(lblgender);
+        JLabel department = new JLabel("Department");
+        department.setBounds(400, 150, 180, 30);
+        add(department);
+        String[] groupdepartment = {"Information Technology", "Information Security", "Electronics and Telecommunication"};
+        cbbmajor = new JComboBox<>(groupdepartment);
+        cbbmajor.setBounds(500, 150, 180, 30);
+        add(cbbmajor);
 
+        JLabel lblclassid = new JLabel("Class Id");
+        lblclassid.setBounds(400, 200, 180, 30);
+        add(lblclassid);
+        tfclassid = new JTextField();
+        tfclassid.setBounds(500, 200, 180, 30);
+        add(tfclassid);
+
+        JLabel lblfirstname = new JLabel("First name");
+        lblfirstname.setBounds(50, 150, 100, 30);
+        add(lblfirstname);
+        tffirstname = new JTextField();
+        tffirstname.setBounds(150, 150, 180, 30);
+        add(tffirstname);
+
+        JLabel lbllastname = new JLabel("Last name");
+        lbllastname.setBounds(50, 200, 180, 30);
+        add(lbllastname);
+        tflastname = new JTextField();
+        tflastname.setBounds(150, 200, 180, 30);
+        add(tflastname);
+
+        JLabel lblgender = new JLabel("Gender");
+        lblgender.setBounds(50, 250, 180, 30);
+        add(lblgender);
         male = new JRadioButton("Male");
-        male.setBounds(200, 300, 80, 30);
+        male.setBounds(150, 250, 80, 30);
         add(male);
         female = new JRadioButton("Female");
-        female.setBounds(300, 300, 80, 30);
+        female.setBounds(250, 250, 80, 30);
         add(female);
-        male.setActionCommand("Male");
-        female.setActionCommand("Female");
         group = new ButtonGroup();
         group.add(male);
         group.add(female);
 
-        JLabel lblclassid = new JLabel("Class id");
-        lblclassid.setBounds(400, 300, 200, 30);
-        lblclassid.setFont(new Font("serif", Font.BOLD, 20));
-        add(lblclassid);
-        tfclassid = new JTextField();
-        tfclassid.setBounds(600, 300, 180, 30);
-        add(tfclassid);
-
-        JLabel lblemail = new JLabel("Email");
-        lblemail.setBounds(50, 400, 200, 30);
-        lblemail.setFont(new Font("serif", Font.BOLD, 20));
-        add(lblemail);
-
-        tfemail = new JTextField();
-        tfemail.setBounds(200, 400, 180, 30);
-        add(tfemail);
-
-        JLabel lblmajor = new JLabel("Major");
-        lblmajor.setBounds(400, 400, 200, 30);
-        lblmajor.setFont(new Font("serif", Font.BOLD, 20));
-        add(lblmajor);
-
-        String course[] = {"Information Technology", "Information Security", "Electronics and Telecommunication"};
-        cbcourse = new JComboBox(course);
-        cbcourse.setBounds(600, 400, 180, 30);
-        cbcourse.setBackground(Color.WHITE);
-        add(cbcourse);
-
         JLabel lbladdress = new JLabel("Address");
-        lbladdress.setBounds(50, 500, 200, 30);
-        lbladdress.setFont(new Font("serif", Font.BOLD, 20));
+        lbladdress.setBounds(400, 250, 180, 30);
         add(lbladdress);
-
         tfaddress = new JTextField();
-        tfaddress.setBounds(200, 500, 180, 30);
+        tfaddress.setBounds(500, 250, 180, 30);
         add(tfaddress);
 
-        JLabel lblphone = new JLabel("Phone");
-        lblphone.setBounds(400, 500, 200, 30);
-        lblphone.setFont(new Font("serif", Font.BOLD, 20));
-        add(lblphone);
-
+        JLabel phonenumber = new JLabel("Phone");
+        phonenumber.setBounds(50, 300, 180, 30);
+        add(phonenumber);
         tfphone = new JTextField();
-        tfphone.setBounds(600, 500, 180, 30);
+        tfphone.setBounds(150, 300, 180, 30);
         add(tfphone);
 
+        JLabel lblemail = new JLabel("Email");
+        lblemail.setBounds(400, 300, 180, 30);
+        add(lblemail);
+        tfemail = new JTextField();
+        tfemail.setBounds(500, 300, 180, 30);
+        add(tfemail);
+
+
         btnupdate = new JButton("Update");
-        btnupdate.setBounds(300, 600, 120, 30);
-        btnupdate.setBackground(Color.BLACK);
-        btnupdate.setForeground(Color.WHITE);
+        btnupdate.setBackground(Color.WHITE);
+        btnupdate.setBounds(250, 400, 100, 30);
         btnupdate.addActionListener(this);
-        btnupdate.setFont(new Font("Tahoma", Font.BOLD, 15));
         add(btnupdate);
 
         btncancel = new JButton("Cancel");
-        btncancel.setBounds(500, 600, 120, 30);
-        btncancel.setBackground(Color.BLACK);
-        btncancel.setForeground(Color.WHITE);
+        btncancel.setBackground(Color.WHITE);
+        btncancel.setBounds(400, 400, 100, 30);
         btncancel.addActionListener(this);
-        btncancel.setFont(new Font("Tahoma", Font.BOLD, 15));
         add(btncancel);
 
-        if (!idstudent.equals("")) {
+        if (!idstudent.isEmpty()) {
             fillFormWithStudentData(idstudent);
         }
+
         setVisible(true);
     }
 
@@ -193,7 +172,7 @@ public class UpdateStudent extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnseacrch) {
+        if (e.getSource() == btnsearch) {
             String studentid = tfsearch.getText();
             if (studentid.equals("")) {
                 JOptionPane.showMessageDialog(this, "Please enter student id to search!");
@@ -223,7 +202,7 @@ public class UpdateStudent extends JFrame implements ActionListener {
         group.clearSelection();
         tfclassid.setText("");
         tfemail.setText("");
-        cbcourse.setSelectedIndex(0);
+        cbbmajor.setSelectedIndex(0);
         tfaddress.setText("");
         tfphone.setText("");
         dcdob.setDate(null);
@@ -234,16 +213,16 @@ public class UpdateStudent extends JFrame implements ActionListener {
         String id = tfid.getText();
         String firstname = tffirstname.getText();
         String lastname = tflastname.getText();
-        String gender = group.getSelection().getActionCommand();
+        String gender = male.isSelected()?"Male" : "Female";
         Date dob = new Date(dcdob.getDate().getTime());
         String classid = tfclassid.getText();
         String phone = tfphone.getText();
         String email = tfemail.getText();
         String address = tfaddress.getText();
-        String major = (String) cbcourse.getSelectedItem();
+        String major = (String) cbbmajor.getSelectedItem();
 
         try (Connection c = DBHelper.getConnection()) {
-            String query = "UPDATE students SET first_name = ?, last_name = ?, gender = ?, date_of_birth = ?, class_id = ?, phone = ?, email = ?, address = ?, major = ? WHERE id = ?";
+            String query = "UPDATE student SET first_name = ?, last_name = ?, gender = ?, dob = ?, class_id = ?, phone = ?, email = ?, address = ?, major = ? WHERE student_id = ?";
             PreparedStatement ps = c.prepareStatement(query);
             ps.setString(1, firstname);
             ps.setString(2, lastname);
@@ -266,20 +245,20 @@ public class UpdateStudent extends JFrame implements ActionListener {
     private void fillFormWithStudentData(String studentid) {
         // Retrieve student data from DB using studentid
         try (Connection c = DBHelper.getConnection()) {
-            String query = "SELECT * FROM students WHERE id = ?";
+            String query = "SELECT * FROM student WHERE student_id = ?";
             PreparedStatement ps = c.prepareStatement(query);
             ps.setString(1, studentid);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                tfid.setText(rs.getString("id"));
+                tfid.setText(rs.getString("student_id"));
                 tffirstname.setText(rs.getString("first_name"));
                 tflastname.setText(rs.getString("last_name"));
                 tfphone.setText(rs.getString("phone"));
                 tfemail.setText(rs.getString("email"));
                 tfclassid.setText(rs.getString("class_id"));
                 tfaddress.setText(rs.getString("address"));
-                cbcourse.setSelectedItem(rs.getString("major"));
-                dcdob.setDate(rs.getDate("date_of_birth"));
+                cbbmajor.setSelectedItem(rs.getString("major"));
+                dcdob.setDate(rs.getDate("dob"));
                 group.setSelected(rs.getString("gender").equalsIgnoreCase("male") ? male.getModel() : female.getModel(), true);
             }
         } catch (SQLException ex) {

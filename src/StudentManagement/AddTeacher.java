@@ -32,7 +32,7 @@ import StudentManagement.model.Teacher;
  */
 public class AddTeacher extends JFrame implements ActionListener {
 
-    JTextField tfid, tffirstname,tflastname, tfaddress, tfphonenumber, tfemail, tfsubject;
+    JTextField tfid, tffirstname,tflastname, tfaddress, tfphonenumber, tfemail;
     JDateChooser dcdob;
     JComboBox cbbdepartment, cbbdegree;
     JButton btnsubmit, btncancel;
@@ -49,7 +49,7 @@ public class AddTeacher extends JFrame implements ActionListener {
 
         JLabel heading = new JLabel("Add Teacher");
         heading.setBounds(50, 50, 150, 30);
-        heading.setFont(new Font("serif", Font.BOLD, 20));
+        heading.setFont(new Font("serif", Font.ITALIC, 20));
         add(heading);
 
         JLabel lblid = new JLabel("Teacher id");
@@ -136,16 +136,6 @@ public class AddTeacher extends JFrame implements ActionListener {
         tfemail.setBounds(500, 300, 180, 30);
         add(tfemail);
         
-        
-        
-        JLabel lblsubject = new JLabel("Subject");
-        lblsubject.setBounds(50, 350, 180, 30);
-        add(lblsubject);
-        tfsubject = new JTextField();
-        tfsubject.setBounds(150, 350, 180, 30);
-        add(tfsubject);
-        
-
         btnsubmit = new JButton("Submit");
         btnsubmit.setBackground(Color.WHITE);
         btnsubmit.setBounds(250, 400, 100, 30);
@@ -178,11 +168,11 @@ public class AddTeacher extends JFrame implements ActionListener {
             String degree = (String) cbbdegree.getSelectedItem();
             String address = tfaddress.getText();
             String email = tfemail.getText();
-            String subject = tfsubject.getText();
+            
             if (id.equals("") || firstname.equals("")
                     || lastname.equals("") || phonenumber.equals("")
                     || address.equals("") || group.getSelection() == null 
-                    || utilDate == null || email.equals("") || subject.equals("") ) {
+                    || utilDate == null || email.equals("" ) ){
                 JOptionPane.showMessageDialog(this, "Please fill in all information");
             } else {
                 
@@ -197,7 +187,6 @@ public class AddTeacher extends JFrame implements ActionListener {
                 t.setDegree(degree);
                 t.setGender(gender);
                 t.setEmail(email);
-                t.setSubject(subject);
                 teacherDaoImpl = new TeacherDaoImpl();
                 try {
                     teacherDaoImpl.insertTeacher(t);
@@ -224,7 +213,6 @@ public class AddTeacher extends JFrame implements ActionListener {
         cbbdepartment.setSelectedIndex(0);
         cbbdegree.setSelectedIndex(0);
         tfemail.setText("");
-        tfsubject.setText("");
     }
 
 }

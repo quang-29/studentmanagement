@@ -189,7 +189,7 @@ public class TeacherDetails extends JFrame implements ActionListener {
 
     private void loadData() {
         Connection c = DBHelper.getConnection();
-        String query = "SELECT * FROM teachers";
+        String query = "SELECT * FROM teacher";
         try {
             PreparedStatement ps = c.prepareStatement(query);
             ResultSet rs = ps.executeQuery();

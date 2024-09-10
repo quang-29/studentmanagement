@@ -38,8 +38,8 @@ import StudentManagement.model.Subject;
 public class SubjectDetails extends JFrame implements ActionListener {
 
     JTable table;
-    JTextField tfsubject, tfsubject_id;
-    JTextField tfacademicyear, tfcredits;
+    JTextField tfsubject_name, tfsubject_id;
+    JTextField tfacademicyear, tfcredits,tfteacher_id;
     JComboBox cbbsemester;
     JButton btnadd, btnupdate, btndelete, btnclear;
     private SubjectDaoImpl subjectDaoImpl;
@@ -60,17 +60,24 @@ public class SubjectDetails extends JFrame implements ActionListener {
         lblsemester.setBounds(50, 400, 200, 30);
         add(lblsemester);
 
-        String semester[] = {"Học kì 1", "Học kì 2", "Semester 1", "Semester 2"};
+        String semester[] = {"Học kì 1", "Học kì 2"};
         cbbsemester = new JComboBox(semester);
         cbbsemester.setBounds(200, 400, 100, 30);
         add(cbbsemester);
 
         JLabel lblacademicyear = new JLabel("Academic year");
-        lblacademicyear.setBounds(50, 450, 200, 30);
+        lblacademicyear.setBounds(50, 450, 100, 30);
         add(lblacademicyear);
         tfacademicyear = new JTextField();
-        tfacademicyear.setBounds(50, 500, 350, 30);
+        tfacademicyear.setBounds(200, 450, 200, 30);
         add(tfacademicyear);
+        
+        JLabel lblteacher_id = new JLabel("Teacher Id");
+        lblteacher_id.setBounds(50, 500, 100, 30);
+        add(lblteacher_id);
+        tfteacher_id = new JTextField();
+        tfteacher_id.setBounds(200, 500, 200, 30);
+        add(tfteacher_id);
 
         JLabel lblsubject = new JLabel("Subject Id");
         lblsubject.setBounds(50, 100, 200, 30);
@@ -84,9 +91,9 @@ public class SubjectDetails extends JFrame implements ActionListener {
         lblsubject_id.setBounds(50, 200, 200, 30);
         add(lblsubject_id);
 
-        tfsubject = new JTextField();
-        tfsubject.setBounds(50, 250, 350, 30);
-        add(tfsubject);
+        tfsubject_name = new JTextField();
+        tfsubject_name.setBounds(50, 250, 350, 30);
+        add(tfsubject_name);
 
         JLabel lblcredits = new JLabel("Credits");
         lblcredits.setBounds(50, 300, 200, 30);
@@ -129,11 +136,13 @@ public class SubjectDetails extends JFrame implements ActionListener {
                 String credits = table.getModel().getValueAt(row, 2).toString();
                 String semester = table.getModel().getValueAt(row, 3).toString();
                 String academicyear = table.getModel().getValueAt(row, 4).toString();
+                String teacherid = table.getModel().getValueAt(row, 5).toString();
                 tfsubject_id.setText(subjectid);
-                tfsubject.setText(subjectname);
+                tfsubject_name.setText(subjectname);
                 tfcredits.setText(credits);
                 tfacademicyear.setText(academicyear);
                 cbbsemester.setSelectedItem(semester);
+                tfteacher_id.setText(teacherid);
             }
         });
 
@@ -145,22 +154,24 @@ public class SubjectDetails extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String idsubject = tfsubject_id.getText();
-        String subjectname = tfsubject.getText();
+        String subjectid = tfsubject_id.getText();
+        String subjectname = tfsubject_name.getText();
         String credits = tfcredits.getText();
         String academicyear = tfacademicyear.getText();
         String semester = (String) cbbsemester.getSelectedItem();
+        String teacherid = tfteacher_id.getText();
         if (e.getSource() == btnadd) {
-            if (idsubject.equals("") || subjectname.equals("")
+            if (subjectid.equals("") || subjectname.equals("")
                     || credits.equals("") || academicyear.equals("")) {
                 JOptionPane.showMessageDialog(this, "Please fill in all information");
             } else {
                 Subject su = new Subject();
-                su.setSubject_id(Integer.parseInt(idsubject));
+                su.setSubject_id(subjectid);
                 su.setSubject_name(subjectname);
                 su.setCredits(Integer.parseInt(credits));
                 su.setSemester(semester);
                 su.setAcademic_year(academicyear);
+                su.setTeacher_id(teacherid);
                 subjectDaoImpl = SubjectDaoImpl.getInstance();
                 subjectDaoImpl.addSubject(su);
                 JOptionPane.showMessageDialog(this, "Add subject successfully");
@@ -169,18 +180,19 @@ public class SubjectDetails extends JFrame implements ActionListener {
             }
 
         } else if (e.getSource() == btnupdate) {
-            if (idsubject.equals("")) {
+            if (subjectid.equals("")) {
                 JOptionPane.showMessageDialog(this, "Please choose subject to update");
             } else {
                 Connection c = DBHelper.getConnection();
-                String query = "UPDATE subjects SET subject_name = ?, credits = ?, semester = ?, academic_year = ? WHERE subject_id = ?";
+                String query = "UPDATE subject SET subject_name = ?, credits = ?, semester = ?, academic_year = ?,teacher_id = ? WHERE subject_id = ?";
                 try {
                     PreparedStatement ps = c.prepareStatement(query);
                     ps.setString(1, subjectname);
                     ps.setInt(2, Integer.parseInt(credits));
                     ps.setString(3, semester);
                     ps.setString(4, academicyear);
-                    ps.setInt(5, Integer.parseInt(idsubject));
+                    ps.setString(5, teacherid);
+                    ps.setString(6, subjectid);
                     int result = ps.executeUpdate();
                     if (result != 0) {
                         JOptionPane.showMessageDialog(this, "Update subject successfully!");
@@ -197,7 +209,7 @@ public class SubjectDetails extends JFrame implements ActionListener {
 
         } else if (e.getSource() == btndelete) {
             subjectDaoImpl = SubjectDaoImpl.getInstance();
-            subjectDaoImpl.deleteSubjectById(idsubject);
+            subjectDaoImpl.deleteSubjectById(subjectid);
             JOptionPane.showMessageDialog(this, "Delete successfully!");
             loadData();
 
@@ -224,11 +236,11 @@ public class SubjectDetails extends JFrame implements ActionListener {
 
     public void setNull() {
         tfsubject_id.setText("");
-        tfsubject.setText("");
+        tfsubject_name.setText("");
         tfcredits.setText("");
         tfacademicyear.setText("");
         cbbsemester.setSelectedIndex(0);
-
+        tfteacher_id.setText("");
     }
 
 }

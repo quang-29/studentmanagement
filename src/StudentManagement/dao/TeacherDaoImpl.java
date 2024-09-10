@@ -20,27 +20,24 @@ public class TeacherDaoImpl {
 
     public void insertTeacher(Teacher t) throws SQLException {
         Connection c = DBHelper.getConnection();
-        String query = "INSERT INTO teachers (id, first_name, last_name, gender, phone_number, dob, department, degree, address, email, subject) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO teacher (teacher_id, first_name, last_name,dob, gender,department, degree,email, address,phone) VALUES (?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = c.prepareStatement(query);
         ps.setString(1, t.getId());
         ps.setString(2, t.getFirst_name());
         ps.setString(3, t.getLast_name());
-        ps.setString(4, t.getGender());
-        ps.setString(5, t.getPhonenumber());
-        ps.setDate(6, (Date) t.getDob());
-        ps.setString(7, t.getDepartment());
-        ps.setString(8, t.getDegree());
+        ps.setDate(4, (Date) t.getDob());
+        ps.setString(6, t.getDepartment());
+        ps.setString(7, t.getDegree());
+        ps.setString(8, t.getEmail());
         ps.setString(9, t.getAddress());
-        ps.setString(10, t.getEmail());
-        ps.setString(11, t.getSubject());
-
+        ps.setString(10, t.getPhonenumber());
         ps.executeUpdate();
         ps.close();
     }
 
     public ResultSet searchTeacherById(String id) {
         Connection c = DBHelper.getConnection();
-        String query = "SELECT * FROM teachers WHERE id = ?";
+        String query = "SELECT * FROM teacher WHERE teacher_id = ?";
         try {
             PreparedStatement ps = c.prepareStatement(query);
             ps.setString(1, id);
@@ -57,7 +54,7 @@ public class TeacherDaoImpl {
     public void deleteTeacherById(String id) {
         Connection c = DBHelper.getConnection();
         try {
-            String query = "DELETE FROM teachers WHERE id = ?";
+            String query = "DELETE FROM teacher WHERE teacher_id = ?";
             PreparedStatement ps = c.prepareStatement(query);
             ps.setString(1, id);
             ps.executeUpdate();
